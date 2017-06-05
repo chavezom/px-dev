@@ -1,15 +1,23 @@
-portworx:
-  image: portworx/px-dev
-  container_name: px-dev
-  ipc: host
-  net: host
-  privileged: true
-  volumes:
-     - /dev:/dev
-     - /usr/src:/usr/src
-     - /run/docker/plugins:/run/docker/plugins
-     - /var/lib/osd:/var/lib/osd:shared
-     - /etc/pwx:/etc/pwx
-     - /opt/pwx/bin:/export_bin:shared
-     - /var/run/docker.sock:/var/run/docker.sock
-     - /var/cores:/var/cores
+version: "3.1"
+services:
+
+  consul:
+    image: "consul"
+    hostname: "consul"
+    command: "agent -dev -client 0.0.0.0"
+
+  portworx:
+    image: chavezom/px-dev:0.0.1
+    container_name: px-dev
+    ipc: host
+#    net: host
+    privileged: true
+    volumes:
+       - /dev:/dev
+       - /usr/src:/usr/src
+       - /run/docker/plugins:/run/docker/plugins
+       - /var/lib/osd:/var/lib/osd:shared
+       - /etc/pwx:/etc/pwx
+       - /opt/pwx/bin:/export_bin:shared
+       - /var/run/docker.sock:/var/run/docker.sock
+       - /var/cores:/var/cores
